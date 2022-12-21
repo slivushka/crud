@@ -1,8 +1,12 @@
 <?php
 include "config.php";
 
+
 //auth
+// if(array_key_exists('login',$_POST)){
+//     auth($conn); }
 function auth($conn) {
+
     $login = $_POST['login'];
     $pass = $_POST['pass']; 
     $pass = md5($pass);
@@ -11,28 +15,37 @@ function auth($conn) {
   
     $result = $conn->query($sql);  
     $user = $result->fetch_assoc();
-
     if ($user == null) {
         echo "Такой пользователь не найден \n";
         exit();
     }
 
-setcookie('user', $user['name'], time() + 3600, "/demo/");
+setcookie('user', $user['name'], time() + 3600, "/crudapp/");
 
 $conn->close();
-header('Location: /crudapp/');    
+header('Location: /crudapp/profile.php');    
 }
-$auth = auth($conn);
+
+if(isset($_POST['test']))
+{
+   auth($conn);
+}
 
 //check
+// if(array_key_exists('register',$_POST)){
+//     check($conn); }  
+
 function check($conn) {
     include "config.php";
+    if(array_key_exists('register',$_POST)) {
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-   
+   $login = $_POST['login'];
+    $name = $_POST['name'];
+    $pass = $_POST['pass'];
     
-    if (mb_strlen($login) < 5 || mb_strlen($login) > 90) {
+    if (mb_strlen($login) < 4 || mb_strlen($login) > 90) {
         echo "Недопустимая длина логина";
         exit();
     } else if (mb_strlen($name) < 3 || mb_strlen($name) > 50) {
@@ -46,12 +59,22 @@ function check($conn) {
     $sql = "INSERT INTO `users`(`login`, `pass`, `name`) VALUES ('$login','$pass','$name')";
     $result = $conn->query($sql);
     if ($result == TRUE) {
-        header('Location: /demo/login.php');
+        header('Location: /crudapp/');
     } else {
       echo "Error:". $sql . "<br>". $conn->error;
     }
     $conn->close();
-}
-$check = check($conn);
+}}
 
+if(isset($_POST['register']))
+{
+   check($conn);
+}
+
+
+function profile(){
+if (!isset($_COOKIE['user'])):
+    echo 'Пожалуйства войдите в учетную запись';
+endif;
+}
 ?>

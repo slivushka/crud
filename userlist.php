@@ -1,14 +1,12 @@
-<? include "config.php";
-include "fu.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="/crudapp/main.css">
-    <title>Document</title>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-light">
@@ -35,22 +33,42 @@ include "fu.php"; ?>
     
   </div>
 </nav>
-<div class="container mt-4">
-  <?php
-  if(!isset($_COOKIE['user'])):
-  ?>
-    <div class="row">
-        <div class="col">
-       
-        <form action='fu.php' method="post">
-        <h1>Авторизация</h1>
-          <input type="text" class="form-control" name="login" id="login"  placeholder="Введите логин"><br>
-          <input type="password" class="form-control" name="pass" id="pass" placeholder="Введите пароль"><br>
-          <button class="btn btn-success" type="submit" name="test">Авторизоваться</button>
-        </form>
-  </div>
-        <?php endif; ?>
-        
+<table class="table">
+          <thead>
+            <tr>
+            <th>name</th>
+            <th>login</th>
+            </tr>
+            </thead>
+            <tbody> 
+            
+        <?php 
+           include "config.php";
+           if(isset($_COOKIE['user'])):
+            $sql = "SELECT * FROM users";
+            echo '<ul>';
+            $result = $conn->query($sql);
+            if ($result->num_rows > 0) {
+
+                while ($row = $result->fetch_assoc()) {
+            ?>
+                    <tr>
+                    <td><?php echo $row['name']; ?></td>
+                    <td><?php echo $row['login']; ?></td>
+                   <td><a class="btn btn-primary" href="update.php?id=<?php echo $row['id']; ?>">Edit</a>&nbsp;
+                   <a class="btn btn-danger" href="delete.php?id=<?php echo $row['id']; ?>">Delete</a></td>
+                    </tr>                       
+        <?php       }
+            } 
+        ?>  
+        <form>
+</form>
+        </tbody>
+</table> <?php endif; ?>
+
+<a href="index.php">
+    <input class="btn btn-secondary d-block mx-auto" type="button" value="Назад">
+</a>
     </div>
 </div>
 </body>

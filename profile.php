@@ -1,5 +1,7 @@
-<? include "config.php";
-include "fu.php"; ?>
+<?php
+require "fu.php";
+profile();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,27 +33,8 @@ include "fu.php"; ?>
         </li>
       </ul>
     </div>
-    <a class="nav-link" href="register.php">Регистрация</a>
-    
+    <a class="nav-link" href="exit.php">Выход из учетной записи</a>
   </div>
 </nav>
-<div class="container mt-4">
-  <?php
-  if(!isset($_COOKIE['user'])):
-  ?>
-    <div class="row">
-        <div class="col">
-       
-        <form action='fu.php' method="post">
-        <h1>Авторизация</h1>
-          <input type="text" class="form-control" name="login" id="login"  placeholder="Введите логин"><br>
-          <input type="password" class="form-control" name="pass" id="pass" placeholder="Введите пароль"><br>
-          <button class="btn btn-success" type="submit" name="test">Авторизоваться</button>
-        </form>
-  </div>
-        <?php endif; ?>
-        
-    </div>
-</div>
 </body>
 </html>
