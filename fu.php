@@ -20,7 +20,8 @@ function auth($conn) {
         exit();
     }
 
-setcookie('user', $user['name'], time() + 3600, "/crudapp/");
+setcookie('user', $user['login'], time() + 3600, "/crudapp/");
+setcookie('role', $user['role'], time() + 3600, "/crudapp/");
 
 $conn->close();
 header('Location: /crudapp/profile.php');    
@@ -44,6 +45,7 @@ function check($conn) {
    $login = $_POST['login'];
     $name = $_POST['name'];
     $pass = $_POST['pass'];
+    $role = $_POST['role'];
     
     if (mb_strlen($login) < 4 || mb_strlen($login) > 90) {
         echo "Недопустимая длина логина";
@@ -56,7 +58,7 @@ function check($conn) {
         exit();
     }
     $pass = md5($pass);
-    $sql = "INSERT INTO `users`(`login`, `pass`, `name`) VALUES ('$login','$pass','$name')";
+    $sql = "INSERT INTO `users`(`login`, `pass`, `name`, `role`) VALUES ('$login','$pass','$name', '$role')";
     $result = $conn->query($sql);
     if ($result == TRUE) {
         header('Location: /crudapp/');
@@ -77,4 +79,13 @@ if (!isset($_COOKIE['user'])):
     echo 'Пожалуйства войдите в учетную запись';
 endif;
 }
+
+
+
+    if(isset($_COOKIE['user'])) {
+        $sql = "SELECT * FROM users";
+        $result = $conn->query($sql);
+       
+        }    
+
 ?>

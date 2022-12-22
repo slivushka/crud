@@ -1,3 +1,4 @@
+<?php require "fu.php" ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +8,7 @@
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="/crudapp/main.css">
-</head>
+  </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-light">
   <div class="container-fluid">
@@ -28,47 +29,49 @@
           <a class="nav-link disabled">tbd</a>
         </li>
       </ul>
+      <?php if (!isset($_COOKIE['user'])) { ?>
+    </div>
+    <a class="nav-link" href="index.php">Вход в учетную запись</a>
+  </div> 
+  </div>
+    <a class="nav-link" href="register.php">Регистрация</a>
+  </div> 
+  </nav>
+  <p>Пожалуйства войдите в учетную запись</p>
+    <?php } else { ?>
     </div>
     <a class="nav-link" href="register.php">Регистрация</a>
-    
   </div>
 </nav>
-<table class="table">
-          <thead>
-            <tr>
-            <th>name</th>
-            <th>login</th>
-            </tr>
-            </thead>
-            <tbody> 
-            
-        <?php 
-           include "config.php";
-           if(isset($_COOKIE['user'])):
-            $sql = "SELECT * FROM users";
-            echo '<ul>';
-            $result = $conn->query($sql);
-            if ($result->num_rows > 0) {
 
-                while ($row = $result->fetch_assoc()) {
-            ?>
-                    <tr>
-                    <td><?php echo $row['name']; ?></td>
-                    <td><?php echo $row['login']; ?></td>
-                   <td><a class="btn btn-primary" href="update.php?id=<?php echo $row['id']; ?>">Edit</a>&nbsp;
-                   <a class="btn btn-danger" href="delete.php?id=<?php echo $row['id']; ?>">Delete</a></td>
-                    </tr>                       
-        <?php       }
-            } 
-        ?>  
-        <form>
-</form>
-        </tbody>
-</table> <?php endif; ?>
-
-<a href="index.php">
-    <input class="btn btn-secondary d-block mx-auto" type="button" value="Назад">
-</a>
+<table class="table table-bordered caption-top">
+<caption>Список пользователей</caption>
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Имя</th>
+      <th scope="col">Логин</th>
+      <th scope="col">Role</th>
+      <th scope="col"> act</th>
+    </tr>
+  </thead>
+  <tbody>
+  <?php 
+        $sql = "SELECT * FROM users";
+        $result = $conn->query($sql);
+         foreach ($result as $value) { ?>
+    <tr>
+      <th><?=$value['id'] ?></th>
+      <td><?=$value['name'] ?></td>
+      <td><?=$value['login'] ?></td>
+      <td><?=$value['role'] ?></td>
+      <td><a class="btn btn-primary" href="update.php?id=<?php echo $value['id']; ?>">Edit</a>&nbsp;
+      <a class="btn btn-danger" href="delete.php?id=<?php echo $value['id']; ?>">Delete</a></td>
+    </tr>
+    <?php }} ?>
+    <? unset($value) ?>
+  </tbody>
+</table>
     </div>
 </div>
 </body>

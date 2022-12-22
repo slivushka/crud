@@ -1,6 +1,6 @@
 <?php
 require "fu.php";
-profile();
+include "config.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,9 +32,30 @@ profile();
           <a class="nav-link disabled">tbd</a>
         </li>
       </ul>
+      <?php if (!isset($_COOKIE['user'])) {?>
+
     </div>
-    <a class="nav-link" href="exit.php">Выход из учетной записи</a>
+    <a class="nav-link" href="index.php">Вход в учетную запись</a>
+  </nav>
+  <p>Пожалуйста, войдите в учетную запись</p>
+</div> 
+<?php } else { ?>
   </div>
-</nav>
+    <a class="nav-link" href="exit.php">Выход из учетной записи</a>
+  </nav>
+  </div> 
+<ul class="list-group">
+<?php
+            $sql = "SELECT * FROM users WHERE login='$_COOKIE[user]'";
+            $result = $conn->query($sql);
+            $row = $result->fetch_assoc();
+            echo "<p>Ваше имя $row[name]</p>";
+            echo "<p>Ваш логин $row[login]</p>";
+            echo "<p>Ваша роль $row[role]</p>";
+}
+?>
+</ul>
+
+
 </body>
 </html>

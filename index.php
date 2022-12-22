@@ -53,5 +53,5 @@ include "fu.php"; ?>
         
     </div>
 </div>
-</body>
+</body> 
 </html>
