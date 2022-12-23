@@ -9,7 +9,7 @@ include "config.php";
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <link rel="stylesheet" href="/crudapp/main.css">
+    <link rel="stylesheet" href="main.css">
     <title>Document</title>
 </head>
 <body>
@@ -20,16 +20,16 @@ include "config.php";
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="index.php">Главная</a>
+          <a class="nav-link" aria-current="page" href="index.php">Главная</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="userlist.php">Пользователи</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="profile.php">Профиль</a>
+          <a class="nav-link active" href="profile.php">Профиль</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link disabled">tbd</a>
+        <a class="nav-link" href="articles.php">Статьи</a>
         </li>
       </ul>
       <?php if (!isset($_COOKIE['user'])) {?>
@@ -55,7 +55,6 @@ include "config.php";
 }
 ?>
 </ul>
-
-
 </body>
 </html>
+

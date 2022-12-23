@@ -28,7 +28,7 @@ require "config.php";
           <a class="nav-link" href="profile.php">Профиль</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link disabled">tbd</a>
+        <a class="nav-link" href="articles.php">Статьи</a>
         </li>
       </ul>
     </div>
