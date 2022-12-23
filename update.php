@@ -1,6 +1,9 @@
 <?php 
-include "config.php";
-if ($_COOKIE['role'] == 'admin' || $_COOKIE['role'] == 'moder' ) {
+require "config.php";
+$sql = "SELECT * FROM users WHERE login='$_COOKIE[user]'";
+            $result = $conn->query($sql);
+            $row = $result->fetch_assoc();
+if ($row['role'] == 'admin' || $row['role'] == 'moder' ) {
     if (isset($_POST['update'])) {
     
         $user_id = $_POST['id'];

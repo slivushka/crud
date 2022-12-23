@@ -1,5 +1,6 @@
-<? include "config.php";
-include "fu.php"; ?>
+<? 
+require "config.php";
+require "fu.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,7 +28,7 @@ include "fu.php"; ?>
           <a class="nav-link" href="profile.php">Профиль</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link disabled">tbd</a>
+          <a class="nav-link" href="articles.php">Статьи</a>
         </li>
       </ul>
     </div>
@@ -53,5 +54,36 @@ include "fu.php"; ?>
         
     </div>
 </div>
+<div class="chat">
+<?php
+require "config.php";
+  $page_id = 150;// Уникальный идентификатор страницы (статьи или поста)
+  $result_set = $conn->query("SELECT * FROM `comments` WHERE `page_id`='$page_id'"); //Вытаскиваем все комментарии для данной страницы
+  while ($row = $result_set->fetch_assoc()) { ?>
+      <?php echo "<p><b>$row[name]</b>: $row[text_comment]"?>
+      <span class="time">11:02</span></p>
+  <br>
+  <?php }
+?>
+
+<?php if(isset($_COOKIE['user'])) { ?>
+<form  name="comment" action="comments.php" method="post">
+<div class="mb-3">
+  <p> <label for="exampleFormControlInput1" class="form-label"><?php echo "$_COOKIE[user]:";?> </label>
+</div>
+    <div class="mb-3">
+    <textarea class="form-control"  type="text" name="text_comment" placeholder="Текст комментария"></textarea>
+</div>
+  </p>
+  <p>
+    <input type="hidden" name="page_id" value="150" />
+    <button type="submit" class="btn btn-primary">Отправить</button>
+  </p>
+  </div>
+  <?php } else {
+    echo "Ввойдите в учетную запись, чтобы оставить комментарий";
+    }
+    ?>
+</form>
 </body> 
 </html>

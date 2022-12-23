@@ -11,3 +11,22 @@ input[type="password"] {
     align-items: center;
     justify-content: center;
 }
+body {
+  font-family: Arial;
+  padding: 20px;
+  background: #f1f1f1;
+}
+
+.time {
+    float: right;
+    color: #aaa;
+    font-size: 14px;
+}
+
+.chat {
+
+    justify-content: center;
+    width: 500px;
+    height: 700px;
+}
+

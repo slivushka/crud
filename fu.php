@@ -21,7 +21,8 @@ function auth($conn) {
     }
 
 setcookie('user', $user['login'], time() + 3600, "/crudapp/");
-setcookie('role', $user['role'], time() + 3600, "/crudapp/");
+//setcookie('role', $user['role'], time() + 3600, "/crudapp/");
+//setcookie('name', $user['name'], time() + 3600, "/crudapp/");
 
 $conn->close();
 header('Location: /crudapp/profile.php');    
@@ -33,8 +34,6 @@ if(isset($_POST['test']))
 }
 
 //check
-// if(array_key_exists('register',$_POST)){
-//     check($conn); }  
 
 function check($conn) {
     include "config.php";
@@ -89,3 +88,30 @@ endif;
         }    
 
 ?>
+
+<?php
+function addarticle() {
+include "config.php";
+    if(array_key_exists('addarticle',$_POST)) {
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+    $author = $_POST['author'];
+    $articlename = $_POST['articlename'];
+    $articletext = $_POST['articletext']; 
+    }
+    $sql = "INSERT INTO `articles`(`articlename`, `author`, `text`) VALUES ('$articlename', '$author', '$articletext')";
+    $result = $conn->query($sql);
+    if ($result == TRUE) {
+        header('Location: articles.php');
+    } else {
+      echo "Error:". $sql . "<br>". $conn->error;
+    }
+    $conn->close();
+}
+
+if(isset($_POST['addarticle']))
+{
+   addarticle($conn);
+}
+    ?>
